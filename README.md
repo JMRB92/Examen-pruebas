@@ -1,47 +1,30 @@
-# EXAMEN TEST · Inteligencia Artificial · v1.04
+# EXAMEN TEST v1.04 — PRUEBA DE 2 PREGUNTAS
 
-Aplicación web estática para que el alumno haga un examen tipo test, **descargue un PDF con su nota y lo entregue manualmente**. Sin Firebase, sin panel del profesor y sin envío automático de resultados.
+Versión de prueba de la aplicación de examen. **No es el examen oficial de 50 preguntas.**
 
-## Novedades de la versión 1.04
+## Qué incluye
 
-- **Grupo obligatorio A–H**, seleccionado desde un desplegable. Nombre y apellidos también son obligatorios.
-- **Resultados privados hasta introducir un código:** tras finalizar, solo aparecen los datos del alumno, fecha/hora, nota, aciertos, errores, preguntas en blanco, tiempo empleado y ampliación. La revisión completa de las 50 preguntas, respuestas del alumno y soluciones requiere el código entregado por el profesor.
-- **Ampliación opcional de 10 minutos:** cuando terminan los primeros 30 minutos se bloquean las respuestas y se ofrece finalizar o ampliar una sola vez. La ampliación **cuenta desde el minuto 30** (no pausa el reloj durante la decisión); el examen termina como máximo al minuto 40, incluso si se cierra la página. Si se rechaza, la duración contabilizada es 30 minutos.
-- **PDF de una sola página, exclusivamente de resultados**, sin preguntas, respuestas del alumno ni soluciones; incluye explícitamente si hubo ampliación y el tiempo autorizado.
-- También al **imprimir / guardar PDF** desde el navegador se oculta la revisión, aunque el alumno haya introducido el código.
-- El código de revisión no queda desbloqueado de forma persistente al recargar.
+- Pregunta original **1** (Introducción a la IA) y pregunta original **26** (Seguridad, privacidad y ética), con los textos y las respuestas correctas conservados.
+- Nombre, apellidos, selector de grupo A–H, instrucciones, preguntas y opciones mezcladas, navegación, borrado de respuestas, corrección y resumen final.
+- Calificación normalizada sobre 10: acierto **+5,00**; error **−1,25**; blanco **0**. Conserva la relación de penalización original (−25 % del valor del acierto).
+- 30 minutos y posibilidad de ampliar 10 minutos una sola vez.
+- Tras finalizar, los resultados **no revelan ninguna solución**. El código **123456789** permite desbloquear la revisión de las dos preguntas en pantalla.
+- PDF descargado directamente desde el navegador con nombre, fecha, grupo, tiempo, ampliación, nota, aciertos, errores y blancos; sin preguntas ni soluciones.
+- Guardado y recuperación en `localStorage` del navegador. La prueba tiene una clave de almacenamiento distinta a la del examen real, para no interferir con él.
+- No hay Firebase, panel del profesor, analítica, librerías remotas, `fetch` ni envío automático de datos.
 
-**Atención:** al ser una web 100 % estática, el código de revisión puede averiguarse inspeccionando el código fuente. Es una barrera para el uso habitual, no una protección contra un estudiante con conocimientos técnicos. La hora local y el almacenamiento del navegador también pueden manipularse: no es un examen antifraude certificado.
+## Comprobar la ampliación sin esperar
 
-## Funcionamiento
+Durante el examen despliega **Herramientas de prueba del temporizador**. Pulsa **Simular fin de 30 minutos**; verás la pantalla de ampliar o terminar. Si amplías, aparecerá **Simular fin de 40 minutos** para forzar la finalización. La ampliación utilizada aparece en el PDF.
 
-1. Introducir nombre, apellidos y grupo (A a H); pulsar **Aceptar**.
-2. Leer instrucciones y pulsar **Comenzar examen**.
-3. Contestar 50 preguntas, con preguntas y cuatro opciones barajadas por separado. Se puede navegar y borrar respuestas.
-4. Finalizar voluntariamente o esperar al minuto 30, cuando aparece una **única** opción de ampliar 10 minutos (hasta el minuto 40).
-5. Ver resumen y descargar PDF (sin soluciones) para entregarlo al profesor.
-6. Solo con el código de revisión facilitado por el profesor se muestra en pantalla la revisión ordenada 1–50 con soluciones.
+## Abrir en Chrome
 
-La nota se calcula como `máximo(0, mínimo(10, aciertos*0,20 - errores*0,05))`, con dos decimales. Sin contestar = 0. Las 50 preguntas, incluidas las correcciones de las preguntas **15, 29, 31 y 49** respecto al temario, están conservadas íntegramente desde v1.03.
+Descarga el archivo `index.html` y ábrelo directamente con Chrome o Edge. La vista previa dentro de ChatGPT puede bloquear JavaScript.
 
-## Publicación en GitHub Pages
+## Publicarlo en GitHub Pages
 
-Descomprimir el ZIP y subir **el contenido de la carpeta** a la raíz del repositorio:
+Sube `index.html` a la raíz de un repositorio, y activa GitHub Pages (rama `main`, carpeta `/ (root)`). No hacen falta otros archivos.
 
-- `index.html` — aplicación completa con 50 preguntas integradas; funciona al abrirla directamente con Chrome o Edge.
-- `test.html` — copia íntegra para pruebas manuales.
-- `data/questions.json` — banco editable utilizado opcionalmente desde GitHub Pages.
-- `sw.js` — caché sin datos personales, para uso sin conexión tras la primera carga.
-- `README.md` — estas instrucciones.
+## Alcance y límites
 
-En **Settings > Pages** del repositorio, publicar desde `main`, carpeta `/ (root)`. Si había versiones antiguas, forzar actualización con **Ctrl + Mayús + R** o borrar datos de ese sitio si continúa mostrando código desactualizado.
-
-El archivo HTML independiente entregado junto al ZIP tiene el mismo código de `index.html`: **descargar y abrir con un navegador**. La vista previa de HTML dentro de ChatGPT puede no ejecutar JavaScript.
-
-## Recuperación del examen
-
-El progreso (incluido el orden aleatorio, respuestas, tiempo y la ampliación solicitada) queda en el almacenamiento local del **mismo navegador, dispositivo y origen web**. El tiempo sigue corriendo al cerrar la página. Si se vuelve después de vencer el plazo máximo, el examen se corrige automáticamente. Tras finalizar, el intento no se puede modificar. Borrar datos del sitio puede eliminar el progreso.
-
-## Privacidad y límites
-
-Ningún nombre, respuesta, nota ni PDF se envía automáticamente. La web alojada requiere descargar el HTML y, opcionalmente, el banco JSON desde GitHub Pages, pero **no hace solicitudes a Firebase ni a servicios de terceros para procesar alumnos**. El PDF se genera completamente en el navegador. No hay autenticación real del profesor, telemetría ni base de datos. No se puede impedir que un alumno experto inspeccione las respuestas integradas o manipule datos locales. El PDF entregado no permite verificar criptográficamente su autenticidad.
+Solo es una prueba de funcionamiento. El código no es seguridad fuerte (el HTML y las soluciones están en el equipo). Una app estática local tampoco puede garantizar que se haya respetado el reloj del dispositivo o que el PDF no se haya modificado.
